@@ -7,6 +7,7 @@
 #include "GUIclient.h"
 #include "GUIclientDlg.h"
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
