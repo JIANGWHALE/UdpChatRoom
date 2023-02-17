@@ -182,7 +182,7 @@ int main()
 					nRet = sendto(sock, (char*)&pkgOffLine, sizeof(pkgOffLine), 0, (sockaddr*)&info.m_si, sizeof(info.m_si));
 				}
 
-				cout << "\r\n=========当前在线列表==========" << endl;
+				cout << "=========当前在线列表==========\r\n" << endl;
 
 				break;
 			}
