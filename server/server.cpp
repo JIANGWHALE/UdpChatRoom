@@ -89,7 +89,9 @@ int main()
 					printf("ip:%s port:%d name:%s 掉线了\r\n", inet_ntoa(it->m_si.sin_addr), ntohs(it->m_si.sin_port), it->m_szName);
 					auto ClientInfo = *it;
 					lst.erase(it);
+
 					cout << "\r\n=========当前在线列表==========" << endl;
+
 					for (auto& info : lst)
 					{
 						printf("ip:%s port:%d name:%s\r\n", inet_ntoa(info.m_si.sin_addr), ntohs(info.m_si.sin_port), info.m_szName);
@@ -168,13 +170,19 @@ int main()
 					printf("ip:%s port:%d name:%s 当前在线\r\n", inet_ntoa(info.m_si.sin_addr), ntohs(info.m_si.sin_port), info.m_szName);
 				}*/
 
+
+				cout << "\r\n=========当前在线列表==========" << endl;
+
 				//转发给在线客户端
 				for (auto info : lst)
 				{
+					printf("ip:%s port:%d name:%s\r\n", inet_ntoa(info.m_si.sin_addr), ntohs(info.m_si.sin_port), info.m_szName);
 					//下线包
 					tagProtoPkg pkgOffLine(S2C_LOGOUT, pkgFromClient.m_szName, siClient);
 					nRet = sendto(sock, (char*)&pkgOffLine, sizeof(pkgOffLine), 0, (sockaddr*)&info.m_si, sizeof(info.m_si));
 				}
+
+				cout << "\r\n=========当前在线列表==========" << endl;
 
 				break;
 			}
