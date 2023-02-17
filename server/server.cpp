@@ -10,7 +10,6 @@
 #include "../include/protocol.h"
 #pragma comment(lib,"ws2_32.lib")
 
-/*多端同步测试*/
 
 using namespace std;
 
