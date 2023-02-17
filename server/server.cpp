@@ -137,7 +137,7 @@ int main()
 					nRet = sendto(sock, (char*)&pkgOnline, sizeof(pkgOnline), 0, (sockaddr*)&siClient, sizeof(siClient));
 				}
 
-				//将这个客户端加入在线客户端
+				//将这个客户端加入在线客户端，并更新一次心跳时间
 				lst.push_back(tagInfo(pkgFromClient.m_szName, siClient, time(NULL)));
 
 
