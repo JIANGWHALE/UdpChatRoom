@@ -274,6 +274,7 @@ void CGUIclientDlg::WorkThread()
 			break;
 		}
 
+
 		case S2C_PRICHAT:
 		{
 			CString fmt;
