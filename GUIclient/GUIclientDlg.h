@@ -47,4 +47,6 @@ public:
 	afx_msg void OnBnClickedPri();
 	bool bIsRunning = false;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+
+	char *ServerAddr = "139.159.178.73";
 };

@@ -220,7 +220,7 @@ void CGUIclientDlg::WorkThread()
 		//设置服务器ip和port
 		sockaddr_in siServer = {};
 		siServer.sin_family = AF_INET;
-		siServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+		siServer.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
 		siServer.sin_port = htons(5555);
 		int nLen = sizeof(siServer);
 
@@ -266,6 +266,11 @@ void CGUIclientDlg::WorkThread()
 			);
 			m_szHistory += fmt;
 			SetDlgItemText(EDT_HISTORY, m_szHistory);
+
+			//实现聊天框自动滚动
+			CEdit* pedit = (CEdit*)GetDlgItem(EDT_HISTORY);
+			pedit->LineScroll(pedit->GetLineCount());
+
 			break;
 		}
 
@@ -282,6 +287,11 @@ void CGUIclientDlg::WorkThread()
 			);
 			m_szHistory += fmt;
 			SetDlgItemText(EDT_HISTORY, m_szHistory);
+
+			//实现聊天框自动滚动
+			CEdit* pedit = (CEdit*)GetDlgItem(EDT_HISTORY);
+			pedit->LineScroll(pedit->GetLineCount());
+
 			break;
 		}
 
@@ -301,16 +311,22 @@ void CGUIclientDlg::OnBnClickedOnline()
 		AfxMessageBox("创建sock失败");
 	}
 
+	
+
 	//设置服务器ip和port
 	sockaddr_in siServer = {};
 	siServer.sin_family = AF_INET;
-	siServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+	siServer.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
 	siServer.sin_port = htons(5555);
 
 	//获取EDT_NAME框中的姓名
 	char szName[NAMELEN] = {};
 	GetDlgItemText(EDT_NAME, szName, sizeof(szName));
-
+	if (strlen(szName) == 0)
+	{
+		AfxMessageBox("昵称不能为空");
+		return;
+	}
 	//构造登陆包
 	tagProtoPkg pkg(C2S_LOGIN,szName);
 
@@ -346,11 +362,15 @@ void CGUIclientDlg::OnBnClickedOffline()
 	//获取EDT_NAME框中的姓名
 	char szName[NAMELEN] = {};
 	GetDlgItemText(EDT_NAME, szName, sizeof(szName));
-
+	if (strlen(szName) == 0)
+	{
+		AfxMessageBox("昵称不能为空");
+		return;
+	}
 	//设置服务器ip和port
 	sockaddr_in siServer = {};
 	siServer.sin_family = AF_INET;
-	siServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+	siServer.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
 	siServer.sin_port = htons(5555);
 
 	//构造登陆包
@@ -395,6 +415,10 @@ void CGUIclientDlg::OnBnClickedPub()
 	//获取EDT_NAME框中的姓名
 	char szName[NAMELEN] = {};
 	GetDlgItemText(EDT_NAME, szName, sizeof(szName));
+	if (strlen(szName) == 0)
+	{
+		AfxMessageBox("昵称不能为空");
+	}
 
 	//获取EDT_CHAT框中的消息
 	char szMsg[MSGLEN] = {};
@@ -403,7 +427,7 @@ void CGUIclientDlg::OnBnClickedPub()
 	//设置服务器ip和port
 	sockaddr_in siServer = {};
 	siServer.sin_family = AF_INET;
-	siServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+	siServer.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
 	siServer.sin_port = htons(5555);
 
 	//构造公聊包
@@ -425,19 +449,28 @@ void CGUIclientDlg::OnBnClickedPri()
 	//获取EDT_NAME框中的姓名
 	char szName[NAMELEN] = {};
 	GetDlgItemText(EDT_NAME, szName, sizeof(szName));
-
+	if (strlen(szName) == 0)
+	{
+		AfxMessageBox("昵称不能为空");
+		return;
+	}
 	//获取EDT_CHAT框中的消息
 	char szMsg[MSGLEN] = {};
 	GetDlgItemText(EDT_CHAT, szMsg, sizeof(szMsg));
 
 	//获取发送对象的sockaddr_in
 	int n = m_list.GetCurSel();
+	if (n == -1)
+	{
+		AfxMessageBox("未选择好友，无法发送私聊");
+		return;
+	}
 	sockaddr_in siTo = *(sockaddr_in*)m_list.GetItemData(n);
 
 	//设置服务器ip和port
 	sockaddr_in siServer = {};
 	siServer.sin_family = AF_INET;
-	siServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+	siServer.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
 	siServer.sin_port = htons(5555);
 
 	//构造私聊包
@@ -460,7 +493,7 @@ void CGUIclientDlg::OnTimer(UINT_PTR nIDEvent)
 	//设置服务器ip和port
 	sockaddr_in siServer = {};
 	siServer.sin_family = AF_INET;
-	siServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+	siServer.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
 	siServer.sin_port = htons(5555);
 
 	//构造私聊包
