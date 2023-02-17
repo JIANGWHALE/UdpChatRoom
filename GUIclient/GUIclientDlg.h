@@ -49,4 +49,8 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	char *ServerAddr = "139.159.178.73";
+
+	//enter快捷键
+	HACCEL m_hAccel;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

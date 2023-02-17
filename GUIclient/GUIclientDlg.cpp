@@ -107,6 +107,8 @@ BOOL CGUIclientDlg::OnInitDialog()
 	// TODO: 在此添加额外的初始化代码
 
 	//初始化ws2_32网络库
+	m_hAccel = ::LoadAcceleratorsA(AfxGetInstanceHandle(), MAKEINTRESOURCE(ACC_ENTER));
+
 	InitWs2_32();
 
 	//上线按钮可用
@@ -504,4 +506,20 @@ void CGUIclientDlg::OnTimer(UINT_PTR nIDEvent)
 	int nRet = sendto(m_sock, (char*)&pkg, sizeof(pkg), 0, (sockaddr*)&siServer, sizeof(siServer));
 
 	CDialogEx::OnTimer(nIDEvent);
+}
+
+//快捷键
+BOOL CGUIclientDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	if (pMsg->message == WM_KEYDOWN)  // 判断是否有按键按下
+	{
+		switch (pMsg->wParam)
+		{
+		case VK_RETURN:     // 回车键
+			OnBnClickedPub();
+			break;
+		}
+	}
+	return false;
 }
