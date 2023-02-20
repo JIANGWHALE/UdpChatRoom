@@ -59,7 +59,7 @@ int main()
 	*/
 	sockaddr_in siServer = {};
 	siServer.sin_family = AF_INET;
-	siServer.sin_addr.S_un.S_addr = ADDR_ANY;// inet_addr("127.0.0.1");
+	siServer.sin_addr.S_un.S_addr = ADDR_ANY;// 
 	siServer.sin_port = htons(5555);
 
 	/**
