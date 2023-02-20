@@ -83,7 +83,7 @@ int main()
 			mtxLst.lock();
 			for (auto it = lst.begin(); it != lst.end(); it++)
 			{
-				if (time(NULL) - it->m_tHeart > 5)
+				if (time(NULL) - it->m_tHeart > 2)
 				{
 					printf("ip:%s port:%d name:%s 掉线了\r\n", inet_ntoa(it->m_si.sin_addr), ntohs(it->m_si.sin_port), it->m_szName);
 					auto ClientInfo = *it;
