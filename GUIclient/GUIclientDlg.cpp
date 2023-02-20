@@ -518,8 +518,8 @@ BOOL CGUIclientDlg::PreTranslateMessage(MSG* pMsg)
 		{
 		case VK_RETURN:     // 回车键
 			OnBnClickedPub();
-			break;
+			return TRUE;
 		}
 	}
-	return false;
+	return CDialogEx::PreTranslateMessage(pMsg);
 }
